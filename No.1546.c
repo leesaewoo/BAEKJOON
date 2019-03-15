@@ -6,34 +6,44 @@ int main(void)
 	scanf("%d", &N);
 	
 	float Score[N];
+	float *ps;
+	ps = Score;
 	float MAX;
 	int i;
-	for(i = 0 ; i < N ; i ++)
+	
+	if(N != 0)
 	{
-		scanf("%f", &Score[i]);
+		for(i = 0 ; i < N ; i ++)
+		{
+			scanf("%f", (ps + i));
+			
+			if(i == 0)
+			{
+				MAX = *(ps + i);
+			}
+			else if(MAX < *(ps + i))
+			{
+				MAX = *(ps + i);
+			}
+		}
 		
-		if(i = 0)
+		for(i = 0 ; i < N ; i ++)
 		{
-			MAX = Score[i];
+			*(ps + i) = (*(ps + i) / MAX) * 100;
 		}
-		else if(MAX < Score[i])
+		
+		float SUM = 0;
+		for(i = 0 ; i < N ; i ++)
 		{
-			MAX = Score[i];
+			SUM += *(ps + i);
 		}
+		
+		printf("%f\n", SUM / N);
 	}
-	
-	for(i = 0 ; i < N ; i ++)
+	else
 	{
-		Score[i] = (Score[i] / MAX) * 100;
+		printf("0");
 	}
-	
-	float SUM = 0;
-	for(i = 0 ; i < N ; i ++)
-	{
-		SUM += Score[i];
-	}
-	
-	printf("%.2f\n", SUM);
 	
 	return 0;
 }
