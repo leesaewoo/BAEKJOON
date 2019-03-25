@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-void z_search(int N, int x, int y, int **pa);
+void z_search(int N, int x, int y, int r, int c);
 int counter = 0;
+int check = 0;
 
 int main(void)
 {
@@ -11,43 +12,81 @@ int main(void)
 	scanf("%d", &N);
 	scanf("%d", &r);
 	scanf("%d", &c); getchar();
-	
-	int **pa = (int**)malloc(sizeof(int*) * pow(2, N));
-	int i;
-	for(i = 0 ; i < pow(2, N) ; i++)
-	{
-		*(pa + i) = (int*)malloc(sizeof(int) * pow(2, N));
-	}
-	
-	z_search(N, 0, 0, pa);
-	
-	printf("%d\n", *(*(pa + r) + c));
-	
-	for(i = 0 ; i < pow(2, N) ; i++)
-	{
-		free(*(pa + i));
-	}
+
+	z_search(N, 0, 0, r, c);
+
 	return 0;
 }
 
-void z_search(int N, int x, int y, int **pa)
+void z_search(int N, int x, int y, int r, int c)
 {
-	if(N == 1)
+	if(N == 1 && check == 0)
 	{
-		*(*(pa + x) + y) = counter;
+		//pa[x][y] = counter;
+		if(x == r && y == c)
+		{
+			printf("%d\n", counter);
+			check = 1;
+		}
 		counter++;
-		*(*(pa + x) + y + 1) = counter;
+		//pa[x][y + 1] = counter;
+		if(x == r && y + 1 == c)
+		{
+			printf("%d\n", counter);
+			check = 1;
+		}
 		counter++;
-		*(*(pa + x + 1) + y) = counter;
+		//pa[x + 1][y] = counter;
+		if(x + 1 == r && y == c)
+		{
+			printf("%d\n", counter);
+			check = 1;
+		}
 		counter++;
-		*(*(pa + x + 1) + y + 1) = counter;
+		//pa[x + 1][y + 1] = counter;
+		if(x + 1 == r && y + 1 == c)
+		{
+			printf("%d\n", counter);
+			check = 1;
+		}
 		counter++;
 	}
-	else
+	else if(N != 1 && check == 0)
 	{
-		z_search(N - 1, x, y, pa);
-		z_search(N - 1, x, y + pow(2, N - 1), pa);
-		z_search(N - 1, x + pow(2, N - 1), y, pa);
-		z_search(N - 1, x + pow(2, N - 1), y + pow(2, N - 1), pa);
+		if(abs(r - x) >= pow(2, N - 1) || abs(c - y) >= pow(2, N - 1))
+		{
+			counter += pow(2, N - 1) * pow(2, N - 1);
+		}
+		else
+		{
+			z_search(N - 1, x, y, r, c);		
+		}
+		
+		if(abs(r - x) >= pow(2, N - 1) || abs(c - (y + pow(2, N - 1))) >= pow(2, N - 1))
+		{
+			counter += pow(2, N - 1) * pow(2, N - 1);
+		}
+		else
+		{
+			z_search(N - 1, x, y + pow(2, N - 1), r, c);
+		}
+		
+		if(abs(r - (x + pow(2, N - 1))) >= pow(2, N - 1) || abs(c - y) >= pow(2, N - 1))
+		{
+			counter += pow(2, N - 1) * pow(2, N - 1);
+		}
+		else
+		{
+			z_search(N - 1, x + pow(2, N - 1), y, r, c);
+		}
+		
+		if(abs(r - (x + pow(2, N - 1))) >= pow(2, N - 1) || abs(c - (y + pow(2, N - 1))) >= pow(2, N - 1))
+		{
+			counter += pow(2, N - 1) * pow(2, N - 1);
+		}
+		else
+		{
+			z_search(N - 1, x + pow(2, N - 1), y + pow(2, N - 1), r, c);
+		}
 	}
 }
