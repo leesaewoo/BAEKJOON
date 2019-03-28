@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 int main(void)
 {
@@ -16,8 +17,14 @@ int main(void)
 		}
 	}
 	
-	printf("i = %d\nsum - X = %d\n", i, sum - X);
-	
+	if(i % 2 == 0) // up
+	{
+		printf("%d/%d\n", i - (sum - X), sum - X + 1);
+	}
+	else if(i % 2 == 1) //down
+	{
+		printf("%d/%d\n", sum - X + 1, i - (sum - X));
+	}
 	
 	return 0;
 }
