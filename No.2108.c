@@ -49,6 +49,7 @@ void MidValue(int Array[], int N)
 	int temp_count_Mode = 0;
 	int count_MidValue = 0;
 	int count_Mode = 0;
+	int check = 0;
 	int i;
 	
 	for(i = 0 ; i < 8001 ; i++)
@@ -69,10 +70,11 @@ void MidValue(int Array[], int N)
 			temp_count_Mode = count_Mode;
 			temp_Mode = i - 4000;
 		}
-		else if(temp_count_Mode = count_Mode)
+		else if(temp_count_Mode == count_Mode && check != 2)
 		{
 			temp_Mode_2 = temp_Mode;
 			temp_Mode = i - 4000;
+			check++;
 		}
 		
 		if(count_MidValue == n / 2)
