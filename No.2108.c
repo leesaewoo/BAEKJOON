@@ -1,11 +1,10 @@
 #include <stdio.h>
 
-void Average(int sum, int N);
+void Average(float sum, float N);
 void MidValue(int Array[], int N);
 void Mode(int Array[], int N);
 
-/* TODO (#1#): 최빈값 함수(Mode) 손보기 */
-/* TODO (#2#): 범위 함수 추가하기 */
+/* TODO (#1#): 범위 함수 추가하기 */
 
 
 int main(void)
@@ -19,7 +18,7 @@ int main(void)
 	for(i = 0 ; i < N ; i++)
 	{
 		scanf("%d", &temp);
-		Array[4000 + temp] = 1;
+		Array[4000 + temp]++;
 		sum += temp;
 	}
 	
@@ -30,9 +29,9 @@ int main(void)
 	return 0;
 }
 
-void Average(int sum, int N)
+void Average(float sum, float N)
 {
-	printf("%d\n", sum / N);
+	printf("Average = %.1f\n", sum / N);
 }
 
 void MidValue(int Array[], int N)
@@ -48,69 +47,55 @@ void MidValue(int Array[], int N)
 		n = N;
 	}       
 
-	int count_MidValue = 0;
+	int count = 0;
 
-	int i;
+	int i, temp_Array;
 	
 	for(i = 0 ; i < 8001 ; i++)
 	{
-		while(Array[i] != 0)
+		temp_Array = Array[i];
+		while(temp_Array != 0)
 		{
-			if(Array[i] == 1)
+			count++;
+			temp_Array--;
+			if(count == n / 2)
 			{
-				count_MidValue++;
-				Array[i]--;
+				printf("MidValue = %d\n", i - 4000);
+				break;
 			}
-		}
-		
-		if(count_MidValue == n / 2)
-		{
-			printf("%d\n", i - 4000);
-			break;
 		}
 	}
 }
 
 void Mode(int Array[], int N)
 {
-	int temp_Mode_2 = 0;
-	int temp_Mode = 0;
-	int temp_count_Mode = 0;
-	int count_Mode = 0;
+	int temp = 0;
+	int count = 0;
+	int count_temp = 0;
 	int check = 0;
-	int i;
+	int i, temp_Array;
 	
-	for(i = 0 ; i < 8001 ; i--)
+	for(i = 0 ; i < 8001 ; i++)
 	{
-		count_Mode = 0;
-		while(Array[i] != 0)
+		temp_Array = Array[i];
+		count = 0;
+		while(temp_Array > 0)
 		{
-			if(Array[i] == 1)
-			{
-				count_Mode++;
-				Array[i]--;
-			}
+			count++;
+			temp_Array--;
 		}
 		
-		if(temp_count_Mode < count_Mode)
+		if(count_temp < count && count != 0)
 		{
-			temp_count_Mode = count_Mode;
-			temp_Mode = i - 4000;
+			count_temp = count;
+			temp = i - 4000;
+			check = 0;
 		}
-		else if(temp_count_Mode == count_Mode)
+		else if(count_temp == count && check == 0 && count != 0)
 		{
-			temp_Mode_2 = temp_Mode;
-			temp_Mode = i - 4000;
+			temp = i - 4000;
+			check = 2;
 		}
 	}
-	
-	if(temp_Mode_2 == 0)
-	{
-		printf("%d\n", temp_Mode);
-	}
-	else if(temp_Mode_2 != 0)
-	{
-		printf("%d\n", temp_Mode_2);
-	}
+	printf("Mode = %d\n", temp);
 }
-
