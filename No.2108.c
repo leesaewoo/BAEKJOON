@@ -2,8 +2,11 @@
 
 void Average(int sum, int N);
 void MidValue(int Array[], int N);
+void Mode(int Array[], int N);
 
-//TODO : 최빈값, 범위 함수 추가하기 
+/* TODO (#1#): 최빈값 함수(Mode) 손보기 */
+/* TODO (#2#): 범위 함수 추가하기 */
+
 
 int main(void)
 {
@@ -22,6 +25,7 @@ int main(void)
 	
 	Average(sum, N);
 	MidValue(Array, N);
+	Mode(Array, N);
 	
 	return 0;
 }
@@ -43,23 +47,46 @@ void MidValue(int Array[], int N)
 	{
 		n = N;
 	}       
+
+	int count_MidValue = 0;
+
+	int i;
 	
+	for(i = 0 ; i < 8001 ; i++)
+	{
+		while(Array[i] != 0)
+		{
+			if(Array[i] == 1)
+			{
+				count_MidValue++;
+				Array[i]--;
+			}
+		}
+		
+		if(count_MidValue == n / 2)
+		{
+			printf("%d\n", i - 4000);
+			break;
+		}
+	}
+}
+
+void Mode(int Array[], int N)
+{
 	int temp_Mode_2 = 0;
 	int temp_Mode = 0;
 	int temp_count_Mode = 0;
-	int count_MidValue = 0;
 	int count_Mode = 0;
 	int check = 0;
 	int i;
 	
-	for(i = 0 ; i < 8001 ; i++)
+	for(i = 0 ; i < 8001 ; i--)
 	{
 		count_Mode = 0;
 		while(Array[i] != 0)
 		{
 			if(Array[i] == 1)
 			{
-				count_MidValue++;
 				count_Mode++;
 				Array[i]--;
 			}
@@ -70,17 +97,10 @@ void MidValue(int Array[], int N)
 			temp_count_Mode = count_Mode;
 			temp_Mode = i - 4000;
 		}
-		else if(temp_count_Mode == count_Mode && check != 2)
+		else if(temp_count_Mode == count_Mode)
 		{
 			temp_Mode_2 = temp_Mode;
 			temp_Mode = i - 4000;
-			check++;
-		}
-		
-		if(count_MidValue == n / 2)
-		{
-			printf("%d\n", i - 4000);
-			break;
 		}
 	}
 	
@@ -93,3 +113,4 @@ void MidValue(int Array[], int N)
 		printf("%d\n", temp_Mode_2);
 	}
 }
+
