@@ -3,9 +3,7 @@
 void Average(float sum, float N);
 void MidValue(int Array[], int N);
 void Mode(int Array[], int N);
-
-/* TODO (#1#): 범위 함수 추가하기 */
-
+void Range(int Array[], int N);
 
 int main(void)
 {
@@ -25,13 +23,14 @@ int main(void)
 	Average(sum, N);
 	MidValue(Array, N);
 	Mode(Array, N);
+	Range(Array, N);
 	
 	return 0;
 }
 
 void Average(float sum, float N)
 {
-	printf("Average = %.1f\n", sum / N);
+	printf("%.0f\n", sum / N);
 }
 
 void MidValue(int Array[], int N)
@@ -60,7 +59,7 @@ void MidValue(int Array[], int N)
 			temp_Array--;
 			if(count == n / 2)
 			{
-				printf("MidValue = %d\n", i - 4000);
+				printf("%d\n", i - 4000);
 				break;
 			}
 		}
@@ -97,5 +96,33 @@ void Mode(int Array[], int N)
 			check = 2;
 		}
 	}
-	printf("Mode = %d\n", temp);
+	printf("%d\n", temp);
+}
+
+void Range(int Array[], int N)
+{
+	int temp_i;
+	int temp_max = -4000;
+	int temp_min = 4000;
+	int i;
+	
+	for(i = 0 ; i < 8001 ; i++)
+	{
+		if(Array[i] > 0)
+		{
+			temp_i = i - 4000;
+			
+			if(temp_max < temp_i)
+			{
+				temp_max = temp_i;
+			}
+			
+			if(temp_min > temp_i)
+			{
+				temp_min = temp_i;
+			}
+		}
+	}
+	
+	printf("%d\n", temp_max - temp_min);
 }
