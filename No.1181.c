@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 void BufferClear()
 {
@@ -6,35 +8,46 @@ void BufferClear()
 }
 
 typedef struct Word {
-	char word[51];
-	int number;
+	char** word;
+	int* number;
 }Word;
 
 int main(void)
 {	
-	Word word_1;
+	Word word;
+	
 	int N;
+	char temp[51];
 	scanf("%d", &N); BufferClear(); // 1 <= N <= 20000
-
-	int i, j;
-	int count;
+	
+	word.word = (char**)malloc(sizeof(char*) * N);
+	word.number = (int*)malloc(sizeof(int) * N);
+	
+	*(word.number + 1) = 1;
+	
+	int i, j, count;
 	for(i = 0 ; i < N ; i++)
 	{
 		count = 0;
-		scanf("%[^\n]s", &word_1.word); BufferClear();
-		for(j = 0 ; j < 50 ; j++)
+		scanf("%[^\n]s", &temp); BufferClear();
+		
+		for(j = 0 ; j < 51 ; j++)
 		{
-			if(word_1.word[j] != NULL)
+			if(temp[j] != 0)
 			{
 				count++;
 			}
-			else if(word_1.word[j] == NULL)
+			else if(temp[j] == 0)
 			{
 				break;
 			}
 		}
-		word_1.number = count;
-		printf("%d\n", word_1.number); // check, need delete
+		*(word.number + i) = count;
+		*(word.word + i) = (char*)malloc(sizeof(char) * (*(word.number) + 1));
+		strcpy(*(word.word + i) , temp);
+		//check//
+		printf("*(word.number + %d) = %d\n*(word.word + %d) = %s\n", i, *(word.number + i), i, *(word.word + i));
+		//check//
 	}
 	
 	return 0;
