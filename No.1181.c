@@ -1,79 +1,81 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-/* TODO (#1#): 같은 길이의 단어들 모아놓은 배열 정렬하는 함수 만들기 */
+#define MAXNUM  51
 
-
-void BufferClear()
-{
+void BufferClear(){
 	while(getchar() != '\n');
 }
 
-typedef struct Word {
-	char** word;
-	int* number;
-}Word;
+typedef struct _Test{
+	char str[MAXNUM];
+	int num;
+}Test;
+
 
 int main(void)
-{	
-	int i, j, count;
-	char str[51];
+{
 	int N;
-	scanf("%d", &N); BufferClear; // 1 <= N <= 20000
+	scanf("%d", &N); BufferClear();
 	
-	Word word;
-	Word temp;
+	Test *mainPtr[N];
 	
-	word.word = (char**)malloc(sizeof(char*) * N);
-	word.number = (int*)malloc(sizeof(int) * N);
-	
-	temp.word = (char**)malloc(sizeof(char*) * N);
-	temp.number = (int*)malloc(sizeof(int) * N);
-	for(i = 0 ; i < 51 ; i++)
+	int i;
+	for(i = 0 ; i < sizeof(mainPtr) / sizeof(Test *) ; i++)
 	{
-		*(temp.word + i) = (char*)malloc(sizeof(char) * 51);
+		ptr[i] = malloc(sizeof(Test));
 	}
 	
+	int j;
 	for(i = 0 ; i < N ; i++)
 	{
-		count = 0;
-		scanf("%[^\n]s", &str); BufferClear;
+		scanf("%[^\n]s", mainPtr[i]->str); BufferClear();
 		
-		for(j = 0 ; j < 51 ; j++)
+		for(j = 0 ; j < MAXNUM ; j++)
 		{
-			if(str[j] != 0)
+			if(mainPtr[i]->str[j] != NULL)
 			{
-				count++;
+				continue;
 			}
-			else if(str[j] == 0)
+			else if(mainPtr[i]->str[j] == NULL)
 			{
+				mainPtr[i]->num = j;
 				break;
 			}
 		}
-		*(word.number + i) = count;
-		*(word.word + i) = (char*)malloc(sizeof(char) * (*(word.number) + 1));
-		strcpy(*(word.word + i) , str);
-		//check//
-		printf("*(word.number + %d) = %d\n*(word.word + %d) = %s\n", i, *(word.number + i), i, *(word.word + i));
-		//check//
 	}
 	
-	int ptrTemp = 0;
+	//check
+	for(i = 0 ; i < N ; i++)
+	{
+		printf("mainPtr[%d] = %s\nmainPtr[%d] = %d\n", i, mainPtr[i]->str, i, mainPtr[i]->num);
+	}
+	//check
 	
+	Test *tempPtr[N];
+	
+	for(i = 0 ; i < sizeof(tempPtr) / sizeof(Temp *) ; i++)
+	{
+		*tempPtr[i] = malloc(sizeof(Temp));
+	}
+	
+	int count;
 	for(i = 0 ; i < 51 ; i++)
 	{
 		count = 0;
 		for(j = 0 ; j < N ; j++)
 		{
-			if(*(word.number + j) == i)
+			if(mainPtr[j]->num == i)
 			{
-				strcpy(*(temp.word + ptrTemp), *(word.word + j));
+				tempPtr[i]->str = mainPtr[j]->str;
+				tempPtr[i]->num = mainPtr[j]->num;
 				count++;
-				ptrTemp++;
 			}
-			
-			for(i = 0 ; i < N ; i++)
+		}
+		
+		if(count > 0)
+		{
+			for(j = 0 ; j < 51 ; j++)
 			{
 				
 			}
