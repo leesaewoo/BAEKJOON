@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAXNUM  51
+
+/* TODO (#1#): 구조체 매개변수 연구 */
+
 
 void BufferClear(){
 	while(getchar() != '\n');
@@ -11,6 +15,8 @@ typedef struct _Test{
 	char str[MAXNUM];
 	int num;
 }Test;
+
+void BubbleSort(Test *tempPtr[], int count);
 
 
 int main(void)
@@ -23,7 +29,7 @@ int main(void)
 	int i;
 	for(i = 0 ; i < sizeof(mainPtr) / sizeof(Test *) ; i++)
 	{
-		ptr[i] = malloc(sizeof(Test));
+		mainPtr[i] = malloc(sizeof(Test));
 	}
 	
 	int j;
@@ -54,9 +60,9 @@ int main(void)
 	
 	Test *tempPtr[N];
 	
-	for(i = 0 ; i < sizeof(tempPtr) / sizeof(Temp *) ; i++)
+	for(i = 0 ; i < sizeof(tempPtr) / sizeof(Test *) ; i++)
 	{
-		*tempPtr[i] = malloc(sizeof(Temp));
+		tempPtr[i] = malloc(sizeof(Test));
 	}
 	
 	int count;
@@ -67,7 +73,7 @@ int main(void)
 		{
 			if(mainPtr[j]->num == i)
 			{
-				tempPtr[i]->str = mainPtr[j]->str;
+				strcpy(tempPtr[i]->str, mainPtr[j]->str);
 				tempPtr[i]->num = mainPtr[j]->num;
 				count++;
 			}
@@ -75,12 +81,18 @@ int main(void)
 		
 		if(count > 0)
 		{
-			for(j = 0 ; j < 51 ; j++)
-			{
-				
-			}
+			BubbleSort(tempPtr, count);
 		}
 	}
 	
 	return 0;
+}
+
+void BubbleSort(Test *tempPtr[], int count)
+{
+	int i;
+	for(i = 0 ; i < count ; i++)
+	{
+		printf("%s\n%d\n", tempPtr[i]->str, tempPtr[i]->num);
+	}
 }
