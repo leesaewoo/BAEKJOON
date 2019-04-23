@@ -4,9 +4,6 @@
 
 #define MAXNUM  51
 
-/* TODO (#1#): 버블정렬 함수 완성하기 */
-
-
 void BufferClear(){
 	while(getchar() != '\n');
 }
@@ -51,13 +48,6 @@ int main(void)
 		}
 	}
 	
-	//check
-	for(i = 0 ; i < N ; i++)
-	{
-		printf("mainPtr[%d] = %s\nmainPtr[%d] = %d\n", i, mainPtr[i]->str, i, mainPtr[i]->num);
-	}
-	//check
-	
 	Test *tempPtr[N];
 	
 	for(i = 0 ; i < sizeof(tempPtr) / sizeof(Test *) ; i++)
@@ -98,13 +88,6 @@ int main(void)
 			}
 		}
 		
-		//check
-		for(j = 0 ; j < count ; j++)
-		{
-			printf("tempPtr[%d] = %s\ntempPtr[%d] = %d\n", j, tempPtr[j]->str, j, tempPtr[j]->num);
-		}
-		//check
-		
 		if(count > 0)
 		{
 			BubbleSort(tempPtr, count);
@@ -118,10 +101,6 @@ void BubbleSort(Test *tempPtr[], int count)
 {
 	int i;
 	
-	//check
-	printf("check tempPtr str = %s\ncheck tempPtr num = %d\n", tempPtr[i]->str, tempPtr[i]->num);
-	//check
-	
 	if(count == 1)
 	{
 		printf("%s\n", tempPtr[count - 1]->str);
@@ -132,7 +111,7 @@ void BubbleSort(Test *tempPtr[], int count)
 		for(i = 0 ; i < count - 1 ; i++)
 		{
 			
-			if(strcmp(tempPtr[i]->str, tempPtr[i + 1]->str) == -1)
+			if(strcmp(tempPtr[i]->str, tempPtr[i + 1]->str) < 0)
 			{
 				strcpy(tempChar, tempPtr[i]->str);
 				strcpy(tempPtr[i]->str, tempPtr[i + 1]->str);
