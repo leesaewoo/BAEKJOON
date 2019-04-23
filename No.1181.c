@@ -119,7 +119,7 @@ void BubbleSort(Test *tempPtr[], int count)
 	int i;
 	
 	//check
-	printf("%s\n%d\n", tempPtr[i]->str, tempPtr[i]->num);
+	printf("check tempPtr str = %s\ncheck tempPtr num = %d\n", tempPtr[i]->str, tempPtr[i]->num);
 	//check
 	
 	if(count == 1)
@@ -139,5 +139,9 @@ void BubbleSort(Test *tempPtr[], int count)
 				strcpy(tempPtr[i + 1]->str, tempChar);
 			}
 		}
+		printf("%s\n", tempPtr[count - 1]->str); 
+		
+		BubbleSort(tempPtr, count -1);
 	}
+	
 }
