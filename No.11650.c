@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* TODO (#1#): TIME OVER -> CHANGE TO MERGE SORT OR HEAP SORT */
+/* TODO (#1#): Line 55 */
 
 void BufferClear(void)
 {
@@ -13,14 +13,25 @@ typedef struct _Coordinate{
 	int y;
 }Coordinate;
 
-void CoordinateSort(struct _Coordinate *cPtr[], int N);
+void Heapify(Coordinate *cPtr, int heapSize, int halfHeapSize);
 
 int main(void)
 {
-	int N;
-	scanf("%d", &N); BufferClear();
+	int heapSize;
+	scanf("%d", &heapSize); BufferClear();
 	
-	Coordinate *cPtr[N];
+	int halfHeapSize;
+	
+	if(heapSize % 2 == 0)
+	{
+		halfHeapSize = heapSize / 2;
+	}
+	else
+	{
+		halfHeapSize = (heapSize + 1) / 2;
+	}
+	
+	Coordinate *cPtr[heapSize];
 	
 	int i;
 	for(i = 0 ; i < sizeof(cPtr) / sizeof(struct _Coordinate *) ; i++)
@@ -28,49 +39,57 @@ int main(void)
 		cPtr[i] = malloc(sizeof(struct _Coordinate));
 	}
 	
-	for(i = 0 ; i < N ; i++)
+	for(i = 0 ; i < heapSize ; i++)
 	{
 		scanf("%d %d", &cPtr[i]->x, &cPtr[i]->y); BufferClear();
 	}
 	
-	CoordinateSort(cPtr, N);
+	int arrayASC[heapSize];
+	for(i = halfHeapSize ; i >= 0 ; i--)
+	{
+		Heapify(cPtr, heapSize, i);
+	}
+	
+	for(i = halfHeapSize ; i >= 0 ; i--)
+	{
+		
+		Haepify(cPtr, heapSize, i)
+	}
 	
 	
 	return 0;
 }
 
-void CoordinateSort(struct _Coordinate *cPtr[], int N)
+void Heapify(Coordinate *cPtr, int heapSize, int halfHeapSize)
 {
-	int i, tempCoordinate;
-	if(N == 1)
+	int temp;
+	if(halfHeapSize != 0)
 	{
-		printf("%d %d\n", cPtr[0]->x, cPtr[0]->y);
-	}
-	else
-	{
-		for(i = 0 ; i < N - 1 ; i++)
+		if(cPtr[(halfHeapSize - 1) * 2 + 1]->x > cPtr[halfHeapSize - 1]->x && (halfHeapSize - 1) * 2 + 1 < heapSize)
 		{
-			if(cPtr[i]->x < cPtr[i + 1]->x)
-			{
-				tempCoordinate = cPtr[i]->x;
-				cPtr[i]->x = cPtr[i + 1]->x;
-				cPtr[i + 1]->x = tempCoordinate;
-				tempCoordinate = cPtr[i]->y;
-				cPtr[i]->y = cPtr[i + 1]->y;
-				cPtr[i + 1]->y = tempCoordinate;
-			}
-			else if(cPtr[i]->y < cPtr[i + 1]->y)
-			{
-				tempCoordinate = cPtr[i]->x;
-				cPtr[i]->x = cPtr[i + 1]->x;
-				cPtr[i + 1]->x = tempCoordinate;
-				tempCoordinate = cPtr[i]->y;
-				cPtr[i]->y = cPtr[i + 1]->y;
-				cPtr[i + 1]->y = tempCoordinate;
-			}
+			temp = cPtr[(halfHeapSize - 1) * 2 + 1]->x;
+			cPtr[(halfHeapSize - 1) * 2 + 1]->x = cPtr[halfHeapSize - 1]->x;
+			cPtr[halfHeapSize - 1]->x = temp;
+			
+			Heapify(Coordinate *cPtr, heapSize, halfHeapSize * 2);
 		}
-		printf("%d %d\n", cPtr[i]->x, cPtr[i]->y);
+		if(heapArray[(halfHeapSize - 1) * 2 + 2] > heapArray[halfHeapSize - 1] && (halfHeapSize - 1) * 2 + 2 < heapSize)
+		{
+			temp = cPtr[(halfHeapSize - 1) * 2 + 2]->x;
+			cPtr[(halfHeapSize - 1) * 2 + 2]->x = cPtr[halfHeapSize - 1]->x;
+			cPtr[halfHeapSize - 1]->x = temp;
+			
+			Heapify(Coordinate *cPtr, heapSize, halfHeapSize * 2 + 1);
+		}
 		
-		CoordinateSort(cPtr, N - 1);
+		//check
+		int i;
+		printf("----\n");
+		for(i = 0 ; i < heapSize ; i++)
+		{
+			printf("%d\n", cPtr[i]->x);
+		}
+		printf("----\n");
+		//check
 	}
 }
