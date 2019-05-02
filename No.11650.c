@@ -44,16 +44,23 @@ int main(void)
 		scanf("%d %d", &cPtr[i]->x, &cPtr[i]->y); BufferClear();
 	}
 	
-	int arrayASC[heapSize];
 	for(i = halfHeapSize ; i >= 0 ; i--)
 	{
 		Heapify(cPtr, heapSize, i);
 	}
 	
-	for(i = halfHeapSize ; i >= 0 ; i--)
+	Coordinate *arrayASC[heapSize];
+	for(i = heapSize - 1 ; i >= 0 ; i--)
 	{
+		arrayASC[i]->x = cPtr[0]->x;
+		arrayASC[i]->y = cPtr[0]->y;
 		
-		Haepify(cPtr, heapSize, i)
+		if(i != 0)
+		{
+			cPtr[0]->x = cPtr[i]->x;
+			cPtr[0]->y = cPtr[i]->y;
+			Heapify(cPtr, i, 1);
+		}
 	}
 	
 	
@@ -87,7 +94,7 @@ void Heapify(Coordinate *cPtr, int heapSize, int halfHeapSize)
 		printf("----\n");
 		for(i = 0 ; i < heapSize ; i++)
 		{
-			printf("%d\n", cPtr[i]->x);
+			printf("x : %d, y = %d\n", cPtr[i]->x, cPtr[i]->y);
 		}
 		printf("----\n");
 		//check
