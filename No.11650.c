@@ -1,19 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* TODO (#1#): Line 55 */
-
 void BufferClear(void)
 {
 	while(getchar() != '\n');
 }
 
 typedef struct _Coordinate{
-	int x; // -100000 <= x,y <= 1000000
+	int x;
 	int y;
 }Coordinate;
 
-void Heapify(Coordinate *cPtr, int heapSize, int halfHeapSize);
+void Heapify(Coordinate *cPtr[], int heapSize, int halfHeapSize);
 
 int main(void)
 {
@@ -50,6 +48,12 @@ int main(void)
 	}
 	
 	Coordinate *arrayASC[heapSize];
+	
+	for(i = 0 ; i < sizeof(arrayASC) / sizeof(struct _Coordinate) ; i++)
+	{
+		arrayASC[i] = malloc(sizeof(struct _Coordinate));
+	} 
+	
 	for(i = heapSize - 1 ; i >= 0 ; i--)
 	{
 		arrayASC[i]->x = cPtr[0]->x;
@@ -63,30 +67,78 @@ int main(void)
 		}
 	}
 	
+	//check
+	for(i = 0 ; i < heapSize ; i++)
+	{
+		printf("arrayASC[%d]->x = %d  arrayASC[%d]->y = %d\n", i, arrayASC[i]->x, i, arrayASC[i]->y);
+	}
+	//check
+	
+	for(i = 0 ; i < heapSize ; i++)
+	{
+		free(cPtr[i]);
+		free(arrayASC[i]);
+	}
 	
 	return 0;
 }
 
-void Heapify(Coordinate *cPtr, int heapSize, int halfHeapSize)
+void Heapify(Coordinate *cPtr[], int heapSize, int halfHeapSize)
 {
-	int temp;
+	Coordinate temp;
+	
 	if(halfHeapSize != 0)
 	{
-		if(cPtr[(halfHeapSize - 1) * 2 + 1]->x > cPtr[halfHeapSize - 1]->x && (halfHeapSize - 1) * 2 + 1 < heapSize)
+		if((halfHeapSize - 1) * 2 + 1 < heapSize)
 		{
-			temp = cPtr[(halfHeapSize - 1) * 2 + 1]->x;
-			cPtr[(halfHeapSize - 1) * 2 + 1]->x = cPtr[halfHeapSize - 1]->x;
-			cPtr[halfHeapSize - 1]->x = temp;
-			
-			Heapify(Coordinate *cPtr, heapSize, halfHeapSize * 2);
+			if(cPtr[(halfHeapSize - 1) * 2 + 1]->x > cPtr[halfHeapSize - 1]->x)
+			{
+				temp.x = cPtr[(halfHeapSize - 1) * 2 + 1]->x;
+				temp.y = cPtr[(halfHeapSize - 1) * 2 + 1]->y;
+				cPtr[(halfHeapSize - 1) * 2 + 1]->x = cPtr[halfHeapSize - 1]->x;
+				cPtr[(halfHeapSize - 1) * 2 + 1]->y = cPtr[halfHeapSize - 1]->y;
+				cPtr[halfHeapSize - 1]->x = temp.x;
+				cPtr[halfHeapSize - 1]->y = temp.y;
+				
+				Heapify(cPtr, heapSize, halfHeapSize * 2);
+			}
+			else if(cPtr[(halfHeapSize - 1) * 2 + 1]->x == cPtr[halfHeapSize - 1]->x && cPtr[(halfHeapSize - 1) * 2 + 1]->y > cPtr[halfHeapSize - 1]->y)
+			{
+				temp.x = cPtr[(halfHeapSize - 1) * 2 + 1]->x;
+				temp.y = cPtr[(halfHeapSize - 1) * 2 + 1]->y;
+				cPtr[(halfHeapSize - 1) * 2 + 1]->x = cPtr[halfHeapSize - 1]->x;
+				cPtr[(halfHeapSize - 1) * 2 + 1]->y = cPtr[halfHeapSize - 1]->y;
+				cPtr[halfHeapSize - 1]->x = temp.x;
+				cPtr[halfHeapSize - 1]->y = temp.y;
+				
+				Heapify(cPtr, heapSize, halfHeapSize * 2);
+			}
 		}
-		if(heapArray[(halfHeapSize - 1) * 2 + 2] > heapArray[halfHeapSize - 1] && (halfHeapSize - 1) * 2 + 2 < heapSize)
+		
+		if((halfHeapSize - 1) * 2 + 2 < heapSize)
 		{
-			temp = cPtr[(halfHeapSize - 1) * 2 + 2]->x;
-			cPtr[(halfHeapSize - 1) * 2 + 2]->x = cPtr[halfHeapSize - 1]->x;
-			cPtr[halfHeapSize - 1]->x = temp;
-			
-			Heapify(Coordinate *cPtr, heapSize, halfHeapSize * 2 + 1);
+			if(cPtr[(halfHeapSize - 1) * 2 + 2]->x > cPtr[halfHeapSize - 1]->x)
+			{
+				temp.x = cPtr[(halfHeapSize - 1) * 2 + 2]->x;
+				temp.y = cPtr[(halfHeapSize - 1) * 2 + 2]->y;
+				cPtr[(halfHeapSize - 1) * 2 + 2]->x = cPtr[halfHeapSize - 1]->x;
+				cPtr[(halfHeapSize - 1) * 2 + 2]->y = cPtr[halfHeapSize - 1]->y;
+				cPtr[halfHeapSize - 1]->x = temp.x;
+				cPtr[halfHeapSize - 1]->y = temp.y;
+				
+				Heapify(cPtr, heapSize, halfHeapSize * 2 + 1);
+			}
+			else if(cPtr[(halfHeapSize - 1) * 2 + 2]->x == cPtr[halfHeapSize - 1]->x && cPtr[(halfHeapSize - 1) * 2 + 2]->y > cPtr[halfHeapSize - 1]->y)
+			{
+				temp.x = cPtr[(halfHeapSize - 1) * 2 + 2]->x;
+				temp.y = cPtr[(halfHeapSize - 1) * 2 + 2]->y;
+				cPtr[(halfHeapSize - 1) * 2 + 2]->x = cPtr[halfHeapSize - 1]->x;
+				cPtr[(halfHeapSize - 1) * 2 + 2]->y = cPtr[halfHeapSize - 1]->y;
+				cPtr[halfHeapSize - 1]->x = temp.x;
+				cPtr[halfHeapSize - 1]->y = temp.y;
+				
+				Heapify(cPtr, heapSize, halfHeapSize * 2 + 1);
+			}
 		}
 		
 		//check
