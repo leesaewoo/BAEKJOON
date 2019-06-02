@@ -14,8 +14,7 @@ int main(void)
 	{
 		DiscriminateVPS();
 	}
-	
-	
+
 	return 0;
 }
 
@@ -27,7 +26,9 @@ void BufferClear(void)
 void DiscriminateVPS(void)
 {
 	int count = 0;
+	int result = 0;
 	char c;
+	
 	while(1)
 	{
 		c = getchar();
@@ -38,20 +39,38 @@ void DiscriminateVPS(void)
 		}
 		else if(c == ')')
 		{
-			count--;
+			if(count > 0)
+			{
+				count--;
+			}
+			else if(count <= 0)
+			{
+				result = -1;
+				BufferClear();
+				break;
+			}
 		}
 		else if(c == '\n')
 		{
+			if(count == 0)
+			{
+				result = 1;
+			}
+			else
+			{
+				result = -1;
+			}
+			
 			break;
 		}
 	}
 	
-	if(count == 0)
+	if(result == 1)
 	{
-		printf("YES %d\n", count);
+		printf("YES\n");
 	}
-	else
+	else if(result == -1)
 	{
-		printf("No %d\n", count);
+		printf("NO\n");
 	}
 }
