@@ -1,16 +1,22 @@
 ﻿using System;
 
-namespace BAEKJOON10172
+namespace BAEKJOON10998
 {
-    class No10172
+    class No10998
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("|\\_/|");
-            Console.WriteLine("|q p|   /}");
-            Console.WriteLine("( 0 )\"\"\"\\");
-            Console.WriteLine("|\"^\"`    |");
-            Console.Write("||_/=\\\\__|");
+            string original = Console.ReadLine();
+
+            string[] split = original.Split(new char[] { ' ' }, StringSplitOptions.None);
+
+            int A, B;
+
+            A = int.Parse(split[0]);
+            B = int.Parse(split[1]);
+
+            Console.WriteLine("{0}", A*B);
+
             Console.ReadKey();
         }
     }
