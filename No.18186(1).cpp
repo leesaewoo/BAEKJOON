@@ -2,6 +2,27 @@
 
 using namespace std;
 
+int FindMin(int a, int b, int c)
+{
+	int min = a;
+	
+	if(min > b)
+	{
+		min = b;
+		
+		if(min > c)
+		{
+			min = c;
+		}
+	}
+	else if(min > c)
+	{
+		min = c;
+	}
+	
+	return min;
+}
+
 int main()
 {
 	int N, B, C;
@@ -17,58 +38,40 @@ int main()
 	}
 	
     int sum = 0;
-
+	
+	int maxOfMin = 0;
+	
+	int index = 0;
+	
 	if(B > C)
 	{
 	    for(int i = 0; i < N; i++)
 	    {
-	        while (arrayA[i] != 0)
-	        {
-	            if (N - i >= 2 && arrayA[i + 1] > 0)
-	            {
-                    if (N - i >= 3 && arrayA[i + 2] > 0)
-                    {
-                    	int min = arrayA[i];
-                    	
-                    	if(min > arrayA[i+1])
-                    	{
-                    		min = arrayA[i+1];
-                    		
-                    		if(min > arrayA[i+2])
-                    		{
-                    			min = arrayA[i+2];
+	        //3, 2, 1개씩 묶어서 탐색, 최소값이 제일
+			// 큰  묶음 탐색 (최소값이 같은 묶음끼리는 구성 값들의 합이 가장 큰 묶음을 우선) 
+			if(arrayA[i] != 0)
+			{
+				if(N - i >= 2 && arrayA[i + 1] != 0)
+				{
+					if(N - i >= 3 && arrayA[i + 2] != 0)
+					{
+						if(maxOfMin < FindMin(arrayA[i], arrayA[i + 1], arrayA[i + 2]);	
+						{
+							maxOfMin = FindMin(arrayA[i], arrayA[i + 1], arrayA[i + 2]);
+							index = i;
+						}
+						else if(maxOfMin == FindMin(arrayA[i], arrayA[i + 1], arrayA[i + 2]))
+						{
+							if(arrayA[index] + arrayA[index + 1] + arrayA[index + 2] < arrayA[i] + arrayA[i + 1] + arrayA[i + 2])
+							{
+								maxOfMin = FindMin(arrayA[i], arrayA[i + 1], arrayA[i + 2]);
+								index = i;
 							}
 						}
-						else if(min > arrayA[i+2])
-						{
-							min = arrayA[i+2];
-						}
-                    	
-                        arrayA[i + 2] -= min;
-                        arrayA[i + 1] -= min;
-                        arrayA[i] -= min;
-                        sum += min * (B + 2 * C);
-                    }
-                    else
-                    {
-                    	int min = arrayA[i];
-                    	
-                    	if(min > arrayA[i+1])
-                    	{
-                    		min = arrayA[i+1];
-						}
-                    	
-                        arrayA[i + 1] -= min;
-                        arrayA[i] -= min;
-                        sum += min * (B + C);
-                    }
-	            }
-	            else
-	            {
-	            	sum += B * arrayA[i];
-	                arrayA[i] = 0;
-	            }
-	        }
+					}
+				}
+			}
+	        
 	    }
 	}
 	else if(B <= C)
