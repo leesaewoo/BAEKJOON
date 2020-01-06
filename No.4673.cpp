@@ -32,6 +32,8 @@ int main() {
 			cout << i << endl;
 		}
 	}
+	
+	delete[] chk;
 
 	system("pause");
 }
