@@ -11,23 +11,29 @@ public :
 	}
 
 	int GetDuplicate() {
-		if(r_1 + r_2 < between) {
-			return 0;
+		if(between == 0 && r_1 == r_2) {
+			return -1;
 		}
 		else if(between == 0 && r_1 != r_2) {
+			return 0;
+		}
+		else if(r_1 + r_2 == between) {
+			return 1;
+		}
+		else if(r_1 + r_2 < between) {
+			return 0;
+		}
+		else if(r_1 + r_2 > between && abs(r_1 - r_2) > between) {
 			return 0;
 		}
 		else if(r_1 + r_2 > between && abs(r_1 - r_2) == between) {
 			return 1;
 		}
-		else if(r_1 + r_2 == between) {
-			return 1;
-		}
-		else if(r_1 + r_2 > between) {
+		else if(r_1 + r_2 > between && between > r_1 && between > r_2) {
 			return 2;
 		}
-		else if(between == 0 && r_1 == r_2) {
-			return -1;
+		else if(r_1 + r_2 > between && between < r_1 && between < r_2) {
+			return 2;
 		}
 	}
 
