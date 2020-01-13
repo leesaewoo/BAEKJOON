@@ -2,20 +2,22 @@
 
 using namespace std;
 
-int Factorial(int num) {
-	int result = 1;
-
-	for(int i = num ; i >= 1 ; i--) {
-		result *= i;
+void Factorial(int num, int &result) {
+	result *= num;
+	
+	if(num != 1) {
+		Factorial(num - 1, result);
 	}
-
-	return result;
 }
 
 int main() {
 	int num;
+	int result = 1;
 	cin >> num;
 
-	cout << Factorial(num) << endl;
+	Factorial(num, result);
+
+	cout << result << endl;
+
 	system("pause");
 }
