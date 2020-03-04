@@ -30,27 +30,11 @@ int main() {
 		chkArr[inputInt + 4000]++;
 	}
 
-	///////////////////////////test
-	for(int i = 0 ; i < N ; i++) {
-		printf("%d", v[i]);
-		if(i != N - 1) {
-			printf(" ");
-		}
-	}
-	printf("\nsum = %d\n", sum);
-	///////////////////////////test
-
-	printf("**Average = %.0f\n", Average((double)sum, (double)N));
+	printf("%.0f\n", Average((double)sum, (double)N));
 
 	sort(v.begin(), v.end());
 
-	///////////////////////////test
-	for(int i = 0 ; i < N ; i++) {
-		printf("v[i] = %d\n", v[i]);
-	}
-	///////////////////////////test
-
-	printf("**CenterValue = %d\n", v[(N - 1) / 2]);
+	printf("%d\n", v[(N - 1) / 2]);
 
 	int chkIndex = 0;
 	int chkValue = 0;
@@ -74,18 +58,14 @@ int main() {
 		}
 	}
 
-	///////////////////////////test
-	printf("chk = %d\n", chk);
-	///////////////////////////test
-
 	if(chk == 0) {
-		printf("**Mode = %d\n", chkIndex - 4000);
+		printf("%d\n", chkIndex - 4000);
 	}
 	else {
-		printf("**Mode = %d\n", mode);
+		printf("%d\n", mode);
 	}
 
-	printf("**Range = %d", v[N - 1] - v[0]);
+	printf("%d", v[N - 1] - v[0]);
 
 	system("pause");
 }
