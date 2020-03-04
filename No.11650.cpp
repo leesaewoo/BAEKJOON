@@ -7,8 +7,6 @@
 
 using namespace std;
 
-typedef struct point point;
-
 struct point {
 	int x;
 	int y;
@@ -39,9 +37,8 @@ int main() {
 	sort(vPoint.begin(), vPoint.end(), compare);
 
 	for(int i = 0 ; i < N ; i++) {
-		printf("vPoint[%d].x = %d, vPoint[%d].x = %d\n", i, vPoint[i].x, i, vPoint[i].y);
+		printf("%d %d\n", vPoint[i].x, vPoint[i].y);
 	}
 	
-
 	system("pause");
 }
