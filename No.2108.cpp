@@ -1,85 +1,91 @@
+//https://www.acmicpc.net/problem/2108
+
 #include <iostream>
-#include <stdlib.h>
+#include <stdio.h>
+#include <vector>
 #include <cmath>
+#include <algorithm>
 
 using namespace std;
 
-double Average(int num, int* &intArray) {
-	double sum = 0;
-
-	for(int i = 0 ; i < num ; i++) {
-		sum += (double)intArray[i];
-	}
-
-	if(round(sum / (double)num) == -0) {
-		return 0;
-	}
-	else {
-		return round(sum / (double)num);
-	}
+double Average(double sum, double N) {
+	return floor((sum / N) + 0.5);
 }
 
-int Compare(const void *a, const void *b) {
-	int num1 = *(int *)a;
-	int num2 = *(int *)b;
+int main() {
 
-	if(num1 > num2) {
-		return 1;
-	}
-	else if(num1 < num2) {
-		return -1;
-	}
-	else {
-		return 0;
-	}
-}
+	int N, inputInt;
+	scanf("%d", &N);
+	
+	vector<int> v;
 
-int Mode(int num, int* &intArray) {
-	short chkNum[8001] = { 0 };
-	for(int i = 0 ; i < num ; i++) {
-		chkNum[intArray[i] + 4000]++;
+	int sum = 0;
+	int chkArr[8001];
+	fill_n(chkArr, 8001, 0);
+
+	for(int i = 0 ; i < N ; i++) {
+		scanf("%d", &inputInt);
+		v.push_back(inputInt);
+		sum += inputInt;
+		chkArr[inputInt + 4000]++;
 	}
 
-	int max = 0;
-	int index;
-	for(int i = 0 ; i < 8001 ; i++) {
-		if(max < chkNum[i]) {
-			max = chkNum[i];
-			index = i;
+	///////////////////////////test
+	for(int i = 0 ; i < N ; i++) {
+		printf("%d", v[i]);
+		if(i != N - 1) {
+			printf(" ");
 		}
 	}
+	printf("\nsum = %d\n", sum);
+	///////////////////////////test
 
-	int cnt = 0;
+	printf("**Average = %.0f\n", Average((double)sum, (double)N));
+
+	sort(v.begin(), v.end());
+
+	///////////////////////////test
+	for(int i = 0 ; i < N ; i++) {
+		printf("v[i] = %d\n", v[i]);
+	}
+	///////////////////////////test
+
+	printf("**CenterValue = %d\n", v[(N - 1) / 2]);
+
+	int chkIndex = 0;
+	int chkValue = 0;
+	int chk = 0;
+	int mode;
+
 	for(int i = 0 ; i < 8001 ; i++) {
-		if(max == chkNum[i]) {
-			cnt++;
-			if(cnt == 2) {
-				return i - 4000;
+		if(chkArr[i] > 0) {
+			if(chkValue < chkArr[i]) {
+				chkIndex = i;
+				chkValue = chkArr[i];
+				chk = 0;
+			}
+			else if(chkValue == chkArr[i] && chk == 0) {
+				chk++;
+				mode = i - 4000;
+			}
+			else if(chkValue == chkArr[i] && chk != 0) {
+				chk++;
 			}
 		}
 	}
 
-	return index - 4000;
-}
+	///////////////////////////test
+	printf("chk = %d\n", chk);
+	///////////////////////////test
 
-int main() {
-	int num;
-	cin >> num;
-
-	int* intArray = new int[num];
-	for(int i = 0 ; i < num ; i++) {
-		cin >> intArray[i];
+	if(chk == 0) {
+		printf("**Mode = %d\n", chkIndex - 4000);
+	}
+	else {
+		printf("**Mode = %d\n", mode);
 	}
 
-	cout << Average(num, intArray) << endl;
-
-	qsort(intArray, num, sizeof(int), Compare);
-
-	cout << intArray[((num + 1) / 2) - 1] << endl;
-
-	cout << Mode(num, intArray) << endl;
-
-	cout << intArray[num - 1] - intArray[0] << endl;
+	printf("**Range = %d", v[N - 1] - v[0]);
 
 	system("pause");
 }
